@@ -17,7 +17,7 @@ const { isEmpty } = require('lodash');
  * @param {object} data - data used to fill the template
  * @returns {{ subject, text, subject }}
  */
-const sendTemplatedEmail = async (emailOptions = {}, emailTemplate = {}, data = {}) => {
+const sendTemplatedEmail = async (emailOptions = {}, emailTemplate = {}, data = {}, attachments={}) => {
   Object.entries(emailOptions).forEach(([key, address]) => {
     if (Array.isArray(address)) {
       address.forEach((email) => {
@@ -60,7 +60,7 @@ const sendTemplatedEmail = async (emailOptions = {}, emailTemplate = {}, data = 
     {}
   );
 
-  return strapi.plugins.email.provider.send({ ...emailOptions, ...templatedAttributes });
+  return strapi.plugins.email.provider.send({ ...emailOptions, ...templatedAttributes, ...attachments });
 };
 
 /**
